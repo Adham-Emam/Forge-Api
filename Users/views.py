@@ -37,6 +37,19 @@ class CreateUserView(generics.CreateAPIView):
         }, status=status.HTTP_201_CREATED)
 
 
+class UserRetrieveUsernameWithEmailView(generics.GenericAPIView):
+    serializer_class = CustomUserSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = self.request.data.get('email')
+
+        try:
+            user = CustomUser.objects.get(email=email)
+            return Response({'username': user.username})  # Return a dict
+        except CustomUser.DoesNotExist:
+            return Response({'detail': 'User not found'}, status=404)  # Return a 404 if not found
+
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer

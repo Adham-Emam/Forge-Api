@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import CurrentUserViewSet, CreateUserView, UserViewSet, NotificationsList, MarkNotificationAsRead, TransactionList, SubscribersListView, UnSubscribeView, UserContactsView, UserMessagesView
+from .views import CurrentUserViewSet, UserRetrieveUsernameWithEmailView, CreateUserView, UserViewSet, NotificationsList, MarkNotificationAsRead, TransactionList, SubscribersListView, UnSubscribeView, UserContactsView, UserMessagesView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
@@ -15,6 +15,7 @@ urlpatterns = [
     }), name='current-user'),
     path('user/register/', CreateUserView.as_view(), name='register'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('get_username/', UserRetrieveUsernameWithEmailView.as_view(), name='get_username'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api-auth/', include('rest_framework.urls')),
     path('notifications/', NotificationsList.as_view(), name='user-notifications'),
